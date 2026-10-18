@@ -1,0 +1,23 @@
+# ERKİS v5.1 — çekirdek bağımlılıklar (bu sürümlerle 137 test geçti; Python 3.11+)
+fastapi==0.115.6
+uvicorn[standard]>=0.34
+sqlalchemy==2.0.36
+pydantic>=2.10
+pydantic-settings>=2.7
+email-validator>=2.2
+psycopg2-binary>=2.9.10
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+bcrypt==4.0.1              # passlib 1.7.4 ile uyumlu son sürüm
+python-multipart==0.0.20
+slowapi==0.1.9
+httpx==0.28.1
+scipy>=1.14                # Clopper–Pearson, GPD testleri (beta/genpareto dağılımı)
+numpy>=1.26                # L-PTİ raking/omega, eşik testleri (scipy ile de gelir; açıkça belirtilmiştir)
+langdetect==1.0.9          # isteğe bağlı dil filtresi [SHUYO2010]
+pytrends==4.9.2            # isteğe bağlı; resmî değil, arşivlendi [PYTRENDS_DOC]
+
+# Test
+pytest>=8.3
+respx==0.22.0
+cryptography>=42

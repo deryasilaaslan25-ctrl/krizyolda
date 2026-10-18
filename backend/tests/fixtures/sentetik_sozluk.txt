@@ -1,0 +1,13 @@
+English Word	anger	anticipation	disgust	fear	joy	negative	positive	sadness	surprise	trust	Turkish Word
+bad	0	0	0	0	0	1	0	0	0	0	kötü
+awful	1	0	1	0	0	1	0	0	0	0	berbat
+good	0	0	0	0	1	0	1	0	0	1	güzel
+quality	0	0	0	0	0	0	0	0	0	0	kalite
+poorquality	0	0	0	0	0	1	0	0	0	0	kalitesiz
+fear	0	0	0	1	0	1	0	0	0	0	korku
+abandon	0	0	0	1	0	1	0	1	0	0	terk etmek
+food	0	0	0	0	1	0	1	0	0	1	gıda
+x1	1	0	0	0	0	1	0	0	0	0	öfke
+x2	0	0	0	0	0	0	1	0	0	0	öfke
+x3	0	0	0	0	0	1	0	0	0	0	öfke
+hi	0	0	0	0	0	0	1	0	0	0	iyi

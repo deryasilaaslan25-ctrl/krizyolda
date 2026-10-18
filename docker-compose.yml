@@ -1,0 +1,50 @@
+# Kullanım: ortam değişkenlerini .env dosyasına yazın (bkz. .env.example), ardından `docker compose up -d --build`.
+# Veritabanı dış ağa açılmaz; yalnızca arka uç ve işçi erişir. TLS için önüne bir ters vekil (Caddy, Traefik, nginx) koyun.
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: krizyolda
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD tanımlı olmalı}
+      POSTGRES_DB: krizyolda
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U krizyolda"]
+      interval: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    env_file: ./backend/.env
+    environment:
+      ENV: production
+      DATABASE_URL: postgresql://krizyolda:${POSTGRES_PASSWORD}@db:5432/krizyolda
+    volumes: [nrc:/app/data/nrc]
+    expose: ["8000"]
+    depends_on:
+      db: { condition: service_healthy }
+
+  worker:
+    build: ./backend
+    restart: unless-stopped
+    env_file: ./backend/.env
+    environment:
+      ENV: production
+      DATABASE_URL: postgresql://krizyolda:${POSTGRES_PASSWORD}@db:5432/krizyolda
+    volumes: [nrc:/app/data/nrc]
+    command: ["python", "-m", "app.worker"]
+    depends_on:
+      db: { condition: service_healthy }
+      backend: { condition: service_started }
+
+  web:
+    build: ./frontend
+    restart: unless-stopped
+    ports: ["${WEB_PORT:-8080}:80"]
+    depends_on: [backend]
+
+volumes:
+  pgdata:
+  nrc:
